@@ -23,7 +23,7 @@ html, body {
 /* Guitar pick shape — wide at top, tapering to a soft point at bottom */
 .pick-container {
   position: relative;
-  width: min(680px, 92vw);
+  width: min(960px, 92vw);
   background: #000;
   /* clip to pick shape using clip-path */
   clip-path: polygon(
@@ -35,7 +35,7 @@ html, body {
     0% 60%,
     0% 10%
   );
-  padding: 52px 60px 96px;
+  padding: 72px 80px 130px;
   text-align: center;
 }
 
@@ -49,7 +49,7 @@ html, body {
 
 .pick-label {
   font-family: 'Georgia', serif;
-  font-size: clamp(2rem, 6vw, 3.2rem);
+  font-size: clamp(2.5rem, 7vw, 4.2rem);
   font-weight: normal;
   color: rgba(255,255,255,0.85);
   letter-spacing: 0.04em;
@@ -57,14 +57,14 @@ html, body {
 }
 .pick-location {
   font-family: 'Georgia', serif;
-  font-size: clamp(0.85rem, 2vw, 1rem);
+  font-size: clamp(1rem, 2.2vw, 1.3rem);
   color: rgba(255,255,255,0.4);
   letter-spacing: 0.18em;
   margin-bottom: 10px;
 }
 .pick-services {
   font-family: 'Georgia', serif;
-  font-size: clamp(0.75rem, 1.6vw, 0.9rem);
+  font-size: clamp(0.9rem, 1.8vw, 1.1rem);
   color: rgba(255,255,255,0.35);
   letter-spacing: 0.12em;
   margin-bottom: 6px;
@@ -90,7 +90,7 @@ html, body {
 
 .artist {
   font-family: 'Georgia', serif;
-  font-size: clamp(0.8rem, 1.8vw, 1rem);
+  font-size: clamp(0.95rem, 2vw, 1.2rem);
   color: var(--fg-dim);
   cursor: default;
   padding: 3px 5px;
@@ -114,8 +114,25 @@ html, body {
   transition: color 0.1s, text-shadow 0.1s;
 }
 
+@media (max-width: 600px) {
+  .pick-container {
+    width: 100vw;
+    min-height: 100vh;
+    clip-path: polygon(
+      12% 0%, 88% 0%, 100% 10%,
+      100% 60%, 50% 100%, 0% 60%, 0% 10%
+    );
+    padding: 60px 28px 140px;
+  }
+  .pick-label { font-size: 2.4rem; }
+  .pick-location { font-size: 0.95rem; }
+  .pick-services { font-size: 0.9rem; }
+  .artist { font-size: 0.9rem; padding: 4px 4px; }
+  .sep { font-size: 0.85rem; }
+}
+
 .sep {
-  font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+  font-size: clamp(0.85rem, 1.8vw, 1.1rem);
   color: rgba(255,255,255,0.12);
   padding: 3px 0;
   pointer-events: none;
