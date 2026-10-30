@@ -1,0 +1,214 @@
+<title>PLX Artists</title>
+<style>
+:root {
+  --bg: #000;
+  --fg-dim: rgba(255,255,255,0.18);
+  --fg-mid: rgba(255,255,255,0.55);
+  --fg-glow: rgba(255,255,255,0.92);
+  --fg-hover: #fff;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Georgia', serif;
+}
+
+/* Guitar pick shape — wide at top, tapering to a soft point at bottom */
+.pick-container {
+  position: relative;
+  width: min(680px, 92vw);
+  background: #000;
+  /* clip to pick shape using clip-path */
+  clip-path: polygon(
+    12% 0%,
+    88% 0%,
+    100% 10%,
+    100% 60%,
+    50% 100%,
+    0% 60%,
+    0% 10%
+  );
+  padding: 52px 60px 96px;
+  text-align: center;
+}
+
+.artist-list { margin: 10px 0; }
+
+.artist-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.pick-label {
+  font-family: 'Georgia', serif;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  font-weight: normal;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+.pick-location {
+  font-family: 'Georgia', serif;
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.18em;
+  margin-bottom: 10px;
+}
+.pick-services {
+  font-family: 'Georgia', serif;
+  font-size: clamp(0.75rem, 1.6vw, 0.9rem);
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.12em;
+  margin-bottom: 6px;
+}
+.pick-contact {
+  font-family: 'Georgia', serif;
+  font-size: clamp(0.75rem, 1.6vw, 0.9rem);
+  letter-spacing: 0.12em;
+  margin-bottom: 20px;
+}
+.pick-contact a {
+  color: rgba(255,255,255,0.45);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.pick-contact a:hover {
+  color: rgba(255,255,255,0.9);
+}
+
+.artist-list {
+  line-height: 1;
+}
+
+.artist {
+  font-family: 'Georgia', serif;
+  font-size: clamp(0.8rem, 1.8vw, 1rem);
+  color: var(--fg-dim);
+  cursor: default;
+  padding: 3px 5px;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.artist.lit {
+  color: var(--fg-glow);
+  text-shadow:
+    0 0 8px rgba(255,255,255,0.6),
+    0 0 20px rgba(255,255,255,0.25);
+}
+
+.artist:hover {
+  color: var(--fg-hover) !important;
+  text-shadow:
+    0 0 10px rgba(255,255,255,0.9),
+    0 0 30px rgba(255,255,255,0.4) !important;
+  transition: color 0.1s, text-shadow 0.1s;
+}
+
+.sep {
+  font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+  color: rgba(255,255,255,0.12);
+  padding: 3px 0;
+  pointer-events: none;
+  user-select: none;
+}
+</style>
+
+<div class="pick-container">
+  <div class="artist-list" id="list-top"></div>
+  <div class="pick-label">PLX Mastering</div>
+  <div class="pick-location">New York, NY</div>
+  <div class="pick-services">Digital - ATMOS - Lacquer - <a href="contact.html" style="color:rgba(255,255,255,0.45);text-decoration:none;letter-spacing:0.12em;transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.9)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">Contact</a></div>
+  <div class="artist-list" id="list-bottom"></div>
+</div>
+
+<script>
+// Hardcoded rows matching original layout — pick shape tapers toward bottom
+const rowsTop = [
+  ["Steel Panther","The Violent Hour"],
+  ["Pantera","Crobot","Pop Evil","Armored Saint"],
+  ["Killswitch Engage","Airbourne","Red Sun Rising"]
+];
+
+const rowsBottom = [
+  ["Smashing Satellites","Volbeat","BRMC","Clutch","Otherwise"],
+  ["Cross Faith","Anthrax","Public Enemy","Avatar","Mr. Big"],
+  ["Bowling For Soup","Paul Gilbert","Anti Mortem","NIN"],
+  ["Opeth","Bad Seed Rising","Theory Of A Deadman"],
+  ["Warpaint","The Winery Dogs","Stone Sour","GT"],
+  ["Satyricon","Kvelertak","Smile Empty Soul"],
+  ["The Amity Affliction","Trivium","Moby"],
+  ["Flying Colors","Blue Sky Riders"],
+  ["Wray","Nasty Habit","Noel"],
+  ["MaNga","Atticus"],
+  ["The Church"],
+  ["MØ"]
+];
+
+let globalIndex = 0;
+
+function buildRows(container, rows) {
+  rows.forEach(row => {
+    const rowDiv = document.createElement('div');
+    rowDiv.className = 'artist-row';
+    row.forEach((name, j) => {
+      const span = document.createElement('span');
+      span.className = 'artist';
+      span.textContent = name;
+      span.dataset.index = globalIndex++;
+      rowDiv.appendChild(span);
+      if (j < row.length - 1) {
+        const sep = document.createElement('span');
+        sep.className = 'sep';
+        sep.textContent = ' - ';
+        rowDiv.appendChild(sep);
+      }
+    });
+    container.appendChild(rowDiv);
+  });
+}
+
+buildRows(document.getElementById('list-top'), rowsTop);
+buildRows(document.getElementById('list-bottom'), rowsBottom);
+
+// ── Slow luminescence wave ──
+const els = document.querySelectorAll('.artist');
+const count = els.length;
+
+// Each artist gets its own sine wave phase and speed
+const phases   = Array.from({length: count}, () => Math.random() * Math.PI * 2);
+const speeds   = Array.from({length: count}, () => 0.6 + Math.random() * 1.0);
+const offsets  = Array.from({length: count}, () => 0.12 + Math.random() * 0.25);
+// Base brightness varies per artist so they never all light at once
+const bases    = Array.from({length: count}, () => 0.08 + Math.random() * 0.12);
+
+let last = null;
+function animate(ts) {
+  if (!last) last = ts;
+  const t = ts / 1000;
+
+  els.forEach((el, i) => {
+    // skip if hovered (CSS handles that)
+    if (el.matches(':hover')) return;
+    const val = bases[i] + offsets[i] * (0.5 + 0.5 * Math.sin(t * speeds[i] + phases[i]));
+    const alpha = Math.min(1, Math.max(0, val));
+    const glow = alpha > 0.45;
+    el.style.color = `rgba(255,255,255,${alpha})`;
+    el.style.textShadow = glow
+      ? `0 0 8px rgba(255,255,255,${(alpha - 0.45) * 1.2}), 0 0 20px rgba(255,255,255,${(alpha - 0.45) * 0.5})`
+      : 'none';
+  });
+
+  requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
+</script>
