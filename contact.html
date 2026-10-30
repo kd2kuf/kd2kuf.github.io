@@ -1,3 +1,4 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PLX Mastering — Contact</title>
 <style>
 :root {
@@ -166,6 +167,23 @@ html, body {
   transition: color 0.2s;
 }
 .back-link:hover { color: rgba(255,255,255,0.7); }
+
+@media (max-width: 600px) {
+  .pick-container {
+    width: 100vw;
+    clip-path: polygon(12% 0%, 88% 0%, 100% 10%, 100% 60%, 50% 100%, 0% 60%, 0% 10%);
+    padding: 60px 36px 130px;
+  }
+  .pick-label { font-size: 2rem !important; }
+  .pick-location { font-size: 1rem !important; }
+  .pick-services { font-size: 0.9rem !important; margin-bottom: 20px; }
+  .contact-form input,
+  .contact-form textarea,
+  .contact-form select,
+  .contact-form button { font-size: 1rem !important; padding: 12px 14px; }
+  .name-email-row { flex-direction: column; gap: 8px; }
+  .back-link { font-size: 0.9rem !important; }
+}
 </style>
 
 <div class="pick-container">
