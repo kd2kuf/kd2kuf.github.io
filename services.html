@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PLX Mastering — Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500&display=swap">
+<style>
+:root {
+  --bg:        #0b0b0d;
+  --bg-2:      #111115;
+  --bg-3:      #18181e;
+  --border:    rgba(255,255,255,0.08);
+  --fg:        #e8e8ec;
+  --fg-muted:  #888896;
+  --accent:    #e8a020;
+  --accent-hi: #f5bc50;
+  --accent-dim:#8a5c0a;
+
+  --display: 'Barlow Condensed', sans-serif;
+  --body:    'Barlow', sans-serif;
+
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ── top bar ── */
+.topbar {
+  padding: 20px max(24px, env(safe-area-inset-left, 0px));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+.wordmark {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 1.3rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.back-link {
+  font-family: var(--display);
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  transition: color 0.2s;
+}
+.back-link:hover { color: var(--fg); }
+
+/* ── services section ── */
+.section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px max(24px, env(safe-area-inset-left, 0px));
+}
+.section-label {
+  font-family: var(--display);
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 48px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  max-width: 200px;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.service-card {
+  background: var(--bg-2);
+  padding: 40px 32px;
+  transition: background 0.2s;
+}
+.service-card:hover { background: var(--bg-3); }
+.service-num {
+  font-family: var(--display);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: var(--accent-dim);
+  margin-bottom: 20px;
+}
+.service-title {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  text-wrap: balance;
+}
+.service-desc {
+  font-size: 0.9rem;
+  color: var(--fg-muted);
+  line-height: 1.65;
+}
+.service-tag {
+  display: inline-block;
+  margin-top: 20px;
+  font-family: var(--display);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent-dim);
+  padding: 4px 10px;
+}
+
+@media (max-width: 700px) {
+  .services-grid { grid-template-columns: 1fr; }
+  .section { padding: 48px 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="wordmark">PLX Mastering</span>
+  <a class="back-link" href="artists.html">← Artists</a>
+</div>
+
+<section class="section">
+  <div class="section-label">Services</div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <h3 class="service-title">Stereo Mastering</h3>
+      <p class="service-desc">
+        Full tonal balance, dynamics shaping, level optimization, and
+        translation check — delivered ready for your distributor in
+        every format you need.
+      </p>
+      <span class="service-tag">All formats</span>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <h3 class="service-title">Atmos Mastering &amp; Creation</h3>
+      <p class="service-desc">
+        Immersive mixes built from stems or beds. PLX delivers
+        a properly monitored Dolby Atmos master that holds up
+        on headphones and spatial speakers alike.
+      </p>
+      <span class="service-tag">Stems or beds</span>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <h3 class="service-title">Vinyl Mastering &amp; Cutting</h3>
+      <p class="service-desc">
+        Vinyl-optimized masters with proper RIAA consideration,
+        side sequencing, and level management. Available as an
+        add-on to standard mastering.
+      </p>
+      <span class="service-tag">Add-on</span>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

@@ -24,8 +24,7 @@ html, body {
 /* Guitar pick shape — wide at top, tapering to a soft point at bottom */
 .pick-container {
   position: relative;
-  width: min(1200px, 92vw);
-  min-height: 92vh;
+  width: min(90vh, 92vw);
   background: #000;
   /* clip to pick shape using clip-path */
   clip-path: polygon(
@@ -37,7 +36,7 @@ html, body {
     0% 60%,
     0% 10%
   );
-  padding: 90px 100px 160px;
+  padding: 7vh 8vw 14vh;
   text-align: center;
 }
 
@@ -64,26 +63,22 @@ html, body {
   letter-spacing: 0.18em;
   margin-bottom: 10px;
 }
-.pick-services {
-  font-family: 'Georgia', serif;
-  font-size: clamp(1rem, 2.2vw, 1.4rem);
-  color: rgba(255,255,255,0.35);
-  letter-spacing: 0.12em;
-  margin-bottom: 6px;
-}
-.pick-contact {
+.pick-nav {
   font-family: 'Georgia', serif;
   font-size: clamp(0.75rem, 1.6vw, 0.9rem);
-  letter-spacing: 0.12em;
-  margin-bottom: 20px;
+  letter-spacing: 0.18em;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
-.pick-contact a {
-  color: rgba(255,255,255,0.45);
+.pick-nav a {
+  color: rgba(255,255,255,0.35);
   text-decoration: none;
   transition: color 0.2s;
 }
-.pick-contact a:hover {
-  color: rgba(255,255,255,0.9);
+.pick-nav a:hover {
+  color: rgba(255,255,255,0.85);
 }
 
 .artist-list {
@@ -128,7 +123,7 @@ html, body {
   }
   .pick-label { font-size: 1.58rem !important; margin-bottom: 3px; }
   .pick-location { font-size: 0.76rem !important; margin-bottom: 3px; }
-  .pick-services { font-size: 0.71rem !important; margin-bottom: 10px; }
+  .pick-nav { font-size: 0.62rem !important; gap: 12px; margin-bottom: 6px; }
   .artist { font-size: 0.68rem !important; padding: 2px 3px; }
   .sep { font-size: 0.65rem !important; }
   .artist-list { margin: 6px 0; }
@@ -145,10 +140,14 @@ html, body {
 </style>
 
 <div class="pick-container">
+  <div class="pick-nav">
+    <a href="services.html">Services</a>
+    <a href="process.html">Process</a>
+    <a href="contact.html">Contact</a>
+  </div>
   <div class="artist-list" id="list-top"></div>
   <div class="pick-label">PLX Mastering</div>
   <div class="pick-location">New York, NY</div>
-  <div class="pick-services">Digital - ATMOS - Lacquer - <a href="contact.html" style="color:rgba(255,255,255,0.45);text-decoration:none;letter-spacing:0.12em;transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.9)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">Contact</a></div>
   <div class="artist-list" id="list-bottom"></div>
 </div>
 
