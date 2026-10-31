@@ -19,12 +19,23 @@ html, body {
   align-items: center;
   justify-content: center;
   font-family: 'Georgia', serif;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url('nyc-bg.jpg') center/cover no-repeat;
+  opacity: 0.22;
+  z-index: 0;
 }
 
 .pick-container {
   position: relative;
+  z-index: 1;
   width: min(680px, 92vw);
-  background: #000;
+  background: rgba(0,0,0,0.82);
   clip-path: polygon(
     12% 0%,
     88% 0%,
