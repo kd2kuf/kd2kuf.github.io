@@ -200,6 +200,79 @@ function buildRows(container, rows) {
 buildRows(document.getElementById('list-top'), rowsTop);
 buildRows(document.getElementById('list-bottom'), rowsBottom);
 
+// ── Hover audio ──
+const soundMap = {
+  "Steel Panther":        "sounds/steel-panther.wav",
+  "The Violent Hour":     "sounds/the-violent-hour.wav",
+  "Pantera":              "sounds/pantera.wav",
+  "Crobot":               "sounds/crobot.wav",
+  "Pop Evil":             "sounds/pop-evil.wav",
+  "Armored Saint":        "sounds/armored-saint.wav",
+  "Killswitch Engage":    "sounds/killswitch-engage.wav",
+  "Airbourne":            "sounds/airbourne.wav",
+  "Red Sun Rising":       "sounds/red-sun-rising.wav",
+  "Smashing Satellites":  "sounds/smashing-satellites.wav",
+  "Volbeat":              "sounds/volbeat.wav",
+  "BRMC":                 "sounds/brmc.wav",
+  "Clutch":               "sounds/clutch.wav",
+  "Otherwise":            "sounds/otherwise.wav",
+  "Cross Faith":          "sounds/cross-faith.wav",
+  "Anthrax":              "sounds/anthrax.wav",
+  "Public Enemy":         "sounds/public-enemy.wav",
+  "Avatar":               "sounds/avatar.wav",
+  "Mr. Big":              "sounds/mr-big.wav",
+  "Bowling For Soup":     "sounds/bowling-for-soup.wav",
+  "Paul Gilbert":         "sounds/paul-gilbert.wav",
+  "Anti Mortem":          "sounds/anti-mortem.wav",
+  "NIN":                  "sounds/nin.wav",
+  "Opeth":                "sounds/opeth.wav",
+  "Bad Seed Rising":      "sounds/bad-seed-rising.wav",
+  "Theory Of A Deadman":  "sounds/theory-of-a-deadman.wav",
+  "Warpaint":             "sounds/warpaint.wav",
+  "The Winery Dogs":      "sounds/the-winery-dogs.wav",
+  "Stone Sour":           "sounds/stone-sour.wav",
+  "GT":                   "sounds/gt.wav",
+  "Satyricon":            "sounds/satyricon.wav",
+  "Kvelertak":            "sounds/kvelertak.wav",
+  "Smile Empty Soul":     "sounds/smile-empty-soul.wav",
+  "The Amity Affliction": "sounds/the-amity-affliction.wav",
+  "Trivium":              "sounds/trivium.wav",
+  "Moby":                 "sounds/moby.wav",
+  "Flying Colors":        "sounds/flying-colors.wav",
+  "Blue Sky Riders":      "sounds/blue-sky-riders.wav",
+  "Wray":                 "sounds/wray.wav",
+  "Nasty Habit":          "sounds/nasty-habit.wav",
+  "Noel":                 "sounds/noel.wav",
+  "MaNga":                "sounds/manga.wav",
+  "Atticus":              "sounds/atticus.wav",
+  "The Church":           "sounds/the-church.wav",
+  "MØ":                   "sounds/mo.wav"
+};
+
+let audioUnlocked = false;
+let currentAudio = null;
+
+async function unlockAndPlay(src) {
+  if (!audioUnlocked) {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      await ctx.resume();
+      audioUnlocked = true;
+    } catch(e) {}
+  }
+  if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
+  const audio = new Audio(src);
+  audio.volume = 0.7;
+  currentAudio = audio;
+  audio.play().catch(() => {});
+}
+
+document.querySelectorAll('.artist').forEach(el => {
+  const src = soundMap[el.textContent.trim()];
+  if (!src) return;
+  el.addEventListener('mouseenter', () => unlockAndPlay(src));
+});
+
 // ── Slow luminescence wave ──
 const els = document.querySelectorAll('.artist');
 const count = els.length;
