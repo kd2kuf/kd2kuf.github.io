@@ -16,16 +16,37 @@ html, body {
   background: var(--bg);
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow-y: auto;
+  font-family: 'Georgia', serif;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url('nyc-bg.jpg') center/cover no-repeat;
+  opacity: 0.22;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.screen {
+  min-height: 100vh;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Georgia', serif;
+  position: relative;
 }
 
 /* Guitar pick shape — wide at top, tapering to a soft point at bottom */
 .pick-container {
   position: relative;
   width: min(90vh, 92vw);
-  background: #000;
+  background: rgba(0,0,0,0.5);
+  position: relative;
+  z-index: 1;
   /* clip to pick shape using clip-path */
   clip-path: polygon(
     12% 0%,
@@ -227,19 +248,110 @@ html, body {
 }
 .modal-close:hover { color: rgba(255,255,255,0.8); }
 @media (max-width: 600px) { .modal-overlay { display: none !important; } }
+
+/* ── desktop contact section ── */
+.desktop-contact { display: block; }
+@media (max-width: 600px) { .desktop-contact { display: none; } }
+
+.dc-pick {
+  position: relative;
+  z-index: 1;
+  width: min(90vh, 92vw);
+  background: rgba(0,0,0,0.5);
+  clip-path: polygon(
+    12% 0%,
+    88% 0%,
+    100% 10%,
+    100% 60%,
+    50% 100%,
+    0% 60%,
+    0% 10%
+  );
+  padding: 7vh 8vw 14vh;
+  text-align: center;
+  color: rgba(255,255,255,0.85);
+  font-family: 'Georgia', serif;
+}
+.dc-label {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: normal;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+.dc-location {
+  font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.18em;
+  margin-bottom: 6px;
+}
+.dc-services {
+  font-size: clamp(0.75rem, 1.4vw, 0.95rem);
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.12em;
+  margin-bottom: 28px;
+}
+.dc-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+  max-width: 360px;
+  margin: 0 auto;
+}
+.dc-form input, .dc-form textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.85);
+  font-family: 'Georgia', serif;
+  font-size: 0.9rem;
+  padding: 10px 14px;
+  outline: none;
+  letter-spacing: 0.04em;
+}
+.dc-form input::placeholder, .dc-form textarea::placeholder {
+  color: rgba(255,255,255,0.25);
+}
+.dc-form textarea { resize: none; height: 80px; }
+.dc-wc {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.2);
+  text-align: right;
+  margin-top: -4px;
+  letter-spacing: 0.06em;
+}
+.dc-form button {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.6);
+  font-family: 'Georgia', serif;
+  font-size: 0.875rem;
+  letter-spacing: 0.18em;
+  padding: 10px 24px;
+  cursor: pointer;
+  align-self: center;
+  margin-top: 4px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.dc-form button:hover {
+  color: rgba(255,255,255,0.9);
+  border-color: rgba(255,255,255,0.6);
+}
 </style>
 
+<div class="screen">
 <div class="pick-container">
   <div class="pick-nav">
     <a href="services.html" id="srv-link">[Services]</a>
     <a href="process.html" id="prc-link">[Process]</a>
-    <a href="contact.html" id="contact-link">[Contact]</a>
+    <a href="#contact-desktop" id="contact-link">[Contact]</a>
   </div>
   <div class="artist-list" id="list-top"></div>
   <div class="pick-label">PLX Mastering</div>
   <div class="pick-location">New York, NY</div>
   <div class="artist-list" id="list-bottom"></div>
 </div>
+</div><!-- /.screen -->
 
 <script>
 // Hardcoded rows matching original layout — pick shape tapers toward bottom
@@ -395,6 +507,23 @@ function animate(ts) {
 }
 requestAnimationFrame(animate);
 </script>
+
+<div class="screen desktop-contact" id="contact-desktop">
+  <div class="dc-pick">
+    <div class="dc-label">PLX Mastering</div>
+    <div class="dc-location">New York, NY</div>
+    <div class="dc-services">Digital &nbsp;&middot;&nbsp; ATMOS &nbsp;&middot;&nbsp; Lacquer</div>
+    <form class="dc-form" action="https://formspree.io/f/myeepaad" method="POST">
+      <input type="text" name="name" placeholder="Your name" required>
+      <input type="email" name="email" placeholder="you@studio.com" required>
+      <input type="text" name="project" placeholder="Song, EP or album title">
+      <textarea name="message" id="dc-message" placeholder="Tell us about your project"></textarea>
+      <div class="dc-wc" id="dc-wc">0 / 232</div>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</div>
+
 <div class="mobile-contact" id="contact">
   <div class="mc-label">PLX Mastering</div>
   <div class="mc-location">New York, NY</div>
@@ -426,6 +555,22 @@ if (mcMsg) {
     }
   });
 }
+
+// Desktop contact word counter
+const dcMsg = document.getElementById("dc-message");
+const dcWc = document.getElementById("dc-wc");
+if (dcMsg) {
+  dcMsg.addEventListener("input", function() {
+    const words = this.value.trim() === "" ? 0 : this.value.trim().split(/\s+/).length;
+    if (words > 232) {
+      this.value = this.value.trim().split(/\s+/).slice(0, 232).join(" ");
+      dcWc.textContent = "232 / 232";
+    } else {
+      dcWc.textContent = words + " / 232";
+    }
+  });
+}
+
 </script>
 
 <!-- Services modal -->
