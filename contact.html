@@ -22,7 +22,7 @@ body::before { content: ''; position: fixed; inset: 0; background: url('nyc-bg.j
 .word-count.over { color: rgba(255,80,80,0.7); }
 .contact-form button { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.6); font-family: 'Georgia', serif; font-size: clamp(0.75rem, 1.6vw, 0.875rem); letter-spacing: 0.18em; padding: 10px 24px; cursor: pointer; transition: border-color 0.2s, color 0.2s; align-self: center; margin-top: 4px; }
 .contact-form button:hover { border-color: rgba(255,255,255,0.7); color: rgba(255,255,255,0.95); }
-@media (max-width: 600px) { .pick-container { width: 100vw; padding: 60px 36px 130px; } .name-email-row { flex-direction: column; gap: 8px; } }
+@media (max-width: 600px) { html, body { align-items: flex-start; overflow-y: auto; } .pick-container { width: 100vw; padding: 60px 36px 130px; margin: 40px 0; } .name-email-row { flex-direction: column; gap: 8px; } }
 </style>
 <a class="top-back" href="artists.html">← Artists</a>
 <div class="pick-container">
