@@ -166,12 +166,73 @@ html, body {
     padding: 10px 24px; cursor: pointer; align-self: center; margin-top: 4px;
   }
 }
+
+/* ── modals (desktop only) ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal-box {
+  background: #0d0d0f;
+  border: 1px solid rgba(255,255,255,0.08);
+  max-width: 860px;
+  width: 92vw;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 48px;
+}
+.modal-grid {
+  display: grid;
+  gap: 1px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.modal-grid.cols-3 { grid-template-columns: repeat(3,1fr); }
+.modal-grid.cols-4 { grid-template-columns: repeat(4,1fr); }
+.modal-card {
+  background: #111115;
+  padding: 32px 28px;
+}
+.modal-card-title {
+  font-family: 'Barlow Condensed', 'Georgia', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 10px;
+}
+.modal-card-desc {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.6;
+}
+.modal-close {
+  display: block;
+  margin-top: 32px;
+  text-align: right;
+  font-family: 'Georgia', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.modal-close:hover { color: rgba(255,255,255,0.8); }
+@media (max-width: 600px) { .modal-overlay { display: none !important; } }
 </style>
 
 <div class="pick-container">
   <div class="pick-nav">
-    <a href="services.html">[Services]</a>
-    <a href="process.html">[Process]</a>
+    <a href="services.html" id="srv-link">[Services]</a>
+    <a href="process.html" id="prc-link">[Process]</a>
     <a href="contact.html" id="contact-link">[Contact]</a>
   </div>
   <div class="artist-list" id="list-top"></div>
@@ -365,4 +426,77 @@ if (mcMsg) {
     }
   });
 }
+</script>
+
+<!-- Services modal -->
+<div class="modal-overlay" id="modal-services">
+  <div class="modal-box">
+    <div class="modal-grid cols-3">
+      <div class="modal-card">
+        <div class="modal-card-title">Stereo Mastering</div>
+        <div class="modal-card-desc">Full tonal balance, dynamics shaping, level optimization, and translation check — delivered ready for your distributor in every format you need.</div>
+      </div>
+      <div class="modal-card">
+        <div class="modal-card-title">Atmos Mastering &amp; Creation</div>
+        <div class="modal-card-desc">Immersive mixes built from stems or beds. PLX delivers a properly monitored Dolby Atmos master that holds up on headphones and spatial speakers alike.</div>
+      </div>
+      <div class="modal-card">
+        <div class="modal-card-title">Vinyl Mastering &amp; Cutting</div>
+        <div class="modal-card-desc">Vinyl-optimized masters with proper RIAA consideration, side sequencing, and level management. Available as an add-on to standard mastering.</div>
+      </div>
+    </div>
+    <span class="modal-close" id="srv-close">Close &mdash; Esc</span>
+  </div>
+</div>
+
+<!-- Process modal -->
+<div class="modal-overlay" id="modal-process">
+  <div class="modal-box">
+    <div class="modal-grid cols-4">
+      <div class="modal-card">
+        <div class="modal-card-title">Submit</div>
+        <div class="modal-card-desc">Send a mix from your album for a test master. We'll evaluate before committing.</div>
+      </div>
+      <div class="modal-card">
+        <div class="modal-card-title">Listen</div>
+        <div class="modal-card-desc">We review your mixes and flag any issues up front — no surprises at delivery.</div>
+      </div>
+      <div class="modal-card">
+        <div class="modal-card-title">Master</div>
+        <div class="modal-card-desc">After the test master is approved, send the full track order with codes and album title.</div>
+      </div>
+      <div class="modal-card">
+        <div class="modal-card-title">Deliver</div>
+        <div class="modal-card-desc">Release-ready masters in every requested format are delivered on time.</div>
+      </div>
+    </div>
+    <span class="modal-close" id="prc-close">Close &mdash; Esc</span>
+  </div>
+</div>
+
+<script>
+(function() {
+  if (window.innerWidth <= 600) return;
+  const srvLink = document.getElementById('srv-link');
+  const prcLink = document.getElementById('prc-link');
+  const srvModal = document.getElementById('modal-services');
+  const prcModal = document.getElementById('modal-process');
+
+  function open(modal) { modal.classList.add('open'); }
+  function close(modal) { modal.classList.remove('open'); }
+
+  srvLink.addEventListener('click', function(e) { e.preventDefault(); open(srvModal); });
+  prcLink.addEventListener('click', function(e) { e.preventDefault(); open(prcModal); });
+
+  document.getElementById('srv-close').addEventListener('click', function() { close(srvModal); });
+  document.getElementById('prc-close').addEventListener('click', function() { close(prcModal); });
+
+  [srvModal, prcModal].forEach(function(m) {
+    m.addEventListener('click', function(e) { if (e.target === m) close(m); });
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { close(srvModal); close(prcModal); }
+  });
+})();
 </script>
