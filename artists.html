@@ -341,6 +341,70 @@ body::before {
   color: rgba(255,255,255,0.9);
   border-color: rgba(255,255,255,0.6);
 }
+
+/* ── mobile modals (phone only) ── */
+@media (max-width: 600px) {
+  .mob-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.40);
+    display: none;
+    flex-direction: column;
+    z-index: 200;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .mob-overlay.open { display: flex; }
+  .mob-modal {
+    background: #0d0d0f;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin-top: auto;
+    padding: 28px 20px 48px;
+    width: 100%;
+  }
+  .mob-close-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+  .mob-close-btn {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.3);
+    font-family: 'Georgia', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 4px 0;
+  }
+  .mob-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .mob-card {
+    background: #111115;
+    padding: 20px 18px;
+  }
+  .mob-card-title {
+    font-family: 'Georgia', serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 6px;
+  }
+  .mob-card-desc {
+    font-family: 'Georgia', serif;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.55;
+  }
+}
 </style>
 
 <div class="screen">
@@ -545,6 +609,28 @@ requestAnimationFrame(animate);
 if (window.innerWidth <= 600) {
   document.getElementById("contact-link").href = "#contact";
 }
+
+// Mobile modals
+if (window.innerWidth <= 600) {
+  var mobSrvLink = document.getElementById('srv-link');
+  var mobPrcLink = document.getElementById('prc-link');
+  var mobSrvModal = document.getElementById('mob-modal-services');
+  var mobPrcModal = document.getElementById('mob-modal-process');
+
+  function mobOpen(m) { m.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function mobClose(m) { m.classList.remove('open'); document.body.style.overflow = ''; }
+
+  mobSrvLink.addEventListener('click', function(e) { e.preventDefault(); mobOpen(mobSrvModal); });
+  mobPrcLink.addEventListener('click', function(e) { e.preventDefault(); mobOpen(mobPrcModal); });
+
+  document.getElementById('mob-srv-close').addEventListener('click', function() { mobClose(mobSrvModal); });
+  document.getElementById('mob-prc-close').addEventListener('click', function() { mobClose(mobPrcModal); });
+
+  [mobSrvModal, mobPrcModal].forEach(function(m) {
+    m.addEventListener('click', function(e) { if (e.target === m) mobClose(m); });
+  });
+}
+
 const mcMsg = document.getElementById("mc-message");
 const mcWc = document.getElementById("mc-wc");
 const MC_LIMIT = 232;
@@ -576,6 +662,57 @@ if (dcMsg) {
 }
 
 </script>
+
+
+<!-- Mobile Services modal -->
+<div class="mob-overlay" id="mob-modal-services">
+  <div class="mob-modal">
+    <div class="mob-close-row">
+      <button class="mob-close-btn" id="mob-srv-close">Close</button>
+    </div>
+    <div class="mob-cards">
+      <div class="mob-card">
+        <div class="mob-card-title">Stereo Mastering</div>
+        <div class="mob-card-desc">Full tonal balance, dynamics shaping, level optimization, and translation check — ready for your distributor in every format.</div>
+      </div>
+      <div class="mob-card">
+        <div class="mob-card-title">Atmos Mastering &amp; Creation</div>
+        <div class="mob-card-desc">Immersive mixes built from stems or beds. A properly monitored Dolby Atmos master that holds up on headphones and spatial speakers.</div>
+      </div>
+      <div class="mob-card">
+        <div class="mob-card-title">Vinyl Mastering &amp; Cutting</div>
+        <div class="mob-card-desc">Vinyl-optimized masters with RIAA consideration, side sequencing, and level management. Available as an add-on to standard mastering.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile Process modal -->
+<div class="mob-overlay" id="mob-modal-process">
+  <div class="mob-modal">
+    <div class="mob-close-row">
+      <button class="mob-close-btn" id="mob-prc-close">Close</button>
+    </div>
+    <div class="mob-cards">
+      <div class="mob-card">
+        <div class="mob-card-title">Submit</div>
+        <div class="mob-card-desc">Send a mix from your album for a test master. We'll evaluate before committing.</div>
+      </div>
+      <div class="mob-card">
+        <div class="mob-card-title">Listen</div>
+        <div class="mob-card-desc">We review your mixes and flag any issues up front — no surprises at delivery.</div>
+      </div>
+      <div class="mob-card">
+        <div class="mob-card-title">Master</div>
+        <div class="mob-card-desc">After the test master is approved, send the full track order with codes and album title.</div>
+      </div>
+      <div class="mob-card">
+        <div class="mob-card-title">Deliver</div>
+        <div class="mob-card-desc">Release-ready masters in every requested format, delivered on time.</div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Services modal -->
 <div class="modal-overlay" id="modal-services">
