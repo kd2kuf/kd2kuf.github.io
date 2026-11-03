@@ -610,26 +610,6 @@ if (window.innerWidth <= 600) {
   document.getElementById("contact-link").href = "#contact";
 }
 
-// Mobile modals
-if (window.innerWidth <= 600) {
-  var mobSrvLink = document.getElementById('srv-link');
-  var mobPrcLink = document.getElementById('prc-link');
-  var mobSrvModal = document.getElementById('mob-modal-services');
-  var mobPrcModal = document.getElementById('mob-modal-process');
-
-  function mobOpen(m) { m.classList.add('open'); document.body.style.overflow = 'hidden'; }
-  function mobClose(m) { m.classList.remove('open'); document.body.style.overflow = ''; }
-
-  mobSrvLink.addEventListener('click', function(e) { e.preventDefault(); mobOpen(mobSrvModal); });
-  mobPrcLink.addEventListener('click', function(e) { e.preventDefault(); mobOpen(mobPrcModal); });
-
-  document.getElementById('mob-srv-close').addEventListener('click', function() { mobClose(mobSrvModal); });
-  document.getElementById('mob-prc-close').addEventListener('click', function() { mobClose(mobPrcModal); });
-
-  [mobSrvModal, mobPrcModal].forEach(function(m) {
-    m.addEventListener('click', function(e) { if (e.target === m) mobClose(m); });
-  });
-}
 
 const mcMsg = document.getElementById("mc-message");
 const mcWc = document.getElementById("mc-wc");
@@ -713,6 +693,27 @@ if (dcMsg) {
     </div>
   </div>
 </div>
+
+// Mobile modals
+if (window.innerWidth <= 600) {
+  var mobSrvLink = document.getElementById('srv-link');
+  var mobPrcLink = document.getElementById('prc-link');
+  var mobSrvModal = document.getElementById('mob-modal-services');
+  var mobPrcModal = document.getElementById('mob-modal-process');
+
+  function mobOpen(m) { m.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function mobClose(m) { m.classList.remove('open'); document.body.style.overflow = ''; }
+
+  mobSrvLink.addEventListener('click', function(e) { e.preventDefault(); mobOpen(mobSrvModal); });
+  mobPrcLink.addEventListener('click', function(e) { e.preventDefault(); mobOpen(mobPrcModal); });
+
+  document.getElementById('mob-srv-close').addEventListener('click', function() { mobClose(mobSrvModal); });
+  document.getElementById('mob-prc-close').addEventListener('click', function() { mobClose(mobPrcModal); });
+
+  [mobSrvModal, mobPrcModal].forEach(function(m) {
+    m.addEventListener('click', function(e) { if (e.target === m) mobClose(m); });
+  });
+}
 
 <!-- Services modal -->
 <div class="modal-overlay" id="modal-services">
