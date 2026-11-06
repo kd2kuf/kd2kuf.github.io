@@ -22,16 +22,6 @@ html, body {
   font-family: 'Georgia', serif;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: url('nyc-bg.jpg') center/cover no-repeat;
-  opacity: 0.22;
-  z-index: 0;
-  pointer-events: none;
-}
-
 .screen {
   min-height: 100vh;
   display: flex;
@@ -41,14 +31,12 @@ body::before {
   width: 100%;
 }
 
-/* Guitar pick shape — wide at top, tapering to a soft point at bottom */
+/* Guitar pick shape */
 .pick-container {
   position: relative;
   width: min(90vh, 92vw);
-  background: rgba(0,0,0,0.5);
-  position: relative;
+  background: #000;
   z-index: 1;
-  /* clip to pick shape using clip-path */
   clip-path: polygon(
     12% 0%,
     88% 0%,
@@ -248,18 +236,13 @@ body::before {
   transition: color 0.2s;
 }
 .modal-close:hover { color: rgba(255,255,255,0.8); }
-@media (max-width: 600px) { .modal-overlay { display: none !important; } body::before { display: none; } }
+@media (max-width: 600px) { .modal-overlay { display: none !important; } }
 
-/* ── desktop contact section ── */
-.desktop-contact { display: block; }
-@media (max-width: 600px) { .desktop-contact { display: none; } }
-
-.dc-pick {
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  z-index: 1;
-  margin: 0 auto;
+/* ── contact modal ── */
+#modal-contact {
+  background: linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)), url('nyc-bg.jpg') center/cover no-repeat;
+}
+.contact-pick {
   width: min(90vh, 92vw);
   background: rgba(0,0,0,0.5);
   clip-path: polygon(
@@ -276,25 +259,25 @@ body::before {
   color: rgba(255,255,255,0.85);
   font-family: 'Georgia', serif;
 }
-.dc-label {
+.ct-label {
   font-size: clamp(2rem, 4vw, 3.5rem);
   font-weight: normal;
   letter-spacing: 0.04em;
   margin-bottom: 6px;
 }
-.dc-location {
+.ct-location {
   font-size: clamp(0.9rem, 1.8vw, 1.2rem);
   color: rgba(255,255,255,0.4);
   letter-spacing: 0.18em;
   margin-bottom: 6px;
 }
-.dc-services {
+.ct-services {
   font-size: clamp(0.75rem, 1.4vw, 0.95rem);
   color: rgba(255,255,255,0.25);
   letter-spacing: 0.12em;
   margin-bottom: 28px;
 }
-.dc-form {
+.ct-form {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -302,7 +285,7 @@ body::before {
   max-width: 360px;
   margin: 0 auto;
 }
-.dc-form input, .dc-form textarea {
+.ct-form input, .ct-form textarea {
   width: 100%;
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.15);
@@ -313,18 +296,18 @@ body::before {
   outline: none;
   letter-spacing: 0.04em;
 }
-.dc-form input::placeholder, .dc-form textarea::placeholder {
+.ct-form input::placeholder, .ct-form textarea::placeholder {
   color: rgba(255,255,255,0.25);
 }
-.dc-form textarea { resize: none; height: 80px; }
-.dc-wc {
+.ct-form textarea { resize: none; height: 80px; }
+.ct-wc {
   font-size: 0.65rem;
   color: rgba(255,255,255,0.2);
   text-align: right;
   margin-top: -4px;
   letter-spacing: 0.06em;
 }
-.dc-form button {
+.ct-form button {
   background: transparent;
   border: 1px solid rgba(255,255,255,0.3);
   color: rgba(255,255,255,0.6);
@@ -337,9 +320,14 @@ body::before {
   margin-top: 4px;
   transition: color 0.2s, border-color 0.2s;
 }
-.dc-form button:hover {
+.ct-form button:hover {
   color: rgba(255,255,255,0.9);
   border-color: rgba(255,255,255,0.6);
+}
+.contact-close-btn {
+  position: absolute;
+  top: 24px;
+  right: 32px;
 }
 
 /* ── mobile modals (phone only) ── */
@@ -413,7 +401,7 @@ body::before {
   <div class="pick-nav">
     <a href="services.html" id="srv-link">[Services]</a>
     <a href="process.html" id="prc-link">[Process]</a>
-    <a href="#contact-desktop" id="contact-link">[Contact]</a>
+    <a href="#" id="contact-link">[Contact]</a>
   </div>
   <div class="artist-list" id="list-top"></div>
   <div class="pick-label">PLX Mastering</div>
@@ -471,7 +459,7 @@ function buildRows(container, rows) {
 buildRows(document.getElementById('list-top'), rowsTop);
 buildRows(document.getElementById('list-bottom'), rowsBottom);
 
-// ── Hover audio ──
+// Hover audio
 const soundMap = {
   "Steel Panther":        "sounds/steel-panther.wav",
   "The Violent Hour":     "sounds/the-violent-hour.wav",
@@ -544,15 +532,13 @@ document.querySelectorAll('.artist').forEach(el => {
   el.addEventListener('mouseenter', () => unlockAndPlay(src));
 });
 
-// ── Slow luminescence wave ──
+// Slow luminescence wave
 const els = document.querySelectorAll('.artist');
 const count = els.length;
 
-// Each artist gets its own sine wave phase and speed
 const phases   = Array.from({length: count}, () => Math.random() * Math.PI * 2);
 const speeds   = Array.from({length: count}, () => 0.6 + Math.random() * 1.0);
 const offsets  = Array.from({length: count}, () => 0.12 + Math.random() * 0.25);
-// Base brightness varies per artist so they never all light at once
 const bases    = Array.from({length: count}, () => 0.08 + Math.random() * 0.12);
 
 let last = null;
@@ -561,7 +547,6 @@ function animate(ts) {
   const t = ts / 1000;
 
   els.forEach((el, i) => {
-    // skip if hovered (CSS handles that)
     if (el.matches(':hover')) return;
     const val = bases[i] + offsets[i] * (0.5 + 0.5 * Math.sin(t * speeds[i] + phases[i]));
     const alpha = Math.min(1, Math.max(0, val));
@@ -577,22 +562,6 @@ function animate(ts) {
 requestAnimationFrame(animate);
 </script>
 
-<div class="screen desktop-contact" id="contact-desktop">
-  <div class="dc-pick">
-    <div class="dc-label">PLX Mastering</div>
-    <div class="dc-location">New York, NY</div>
-    <div class="dc-services">Digital &nbsp;&middot;&nbsp; ATMOS &nbsp;&middot;&nbsp; Lacquer</div>
-    <form class="dc-form" action="https://formspree.io/f/myeepaad" method="POST">
-      <input type="text" name="name" placeholder="Your name" required>
-      <input type="email" name="email" placeholder="you@studio.com" required>
-      <input type="text" name="project" placeholder="Song, EP or album title">
-      <textarea name="message" id="dc-message" placeholder="Tell us about your project"></textarea>
-      <div class="dc-wc" id="dc-wc">0 / 232</div>
-      <button type="submit">Send Message</button>
-    </form>
-  </div>
-</div>
-
 <div class="mobile-contact" id="contact">
   <div class="mc-label">PLX Mastering</div>
   <div class="mc-location">New York, NY</div>
@@ -606,11 +575,11 @@ requestAnimationFrame(animate);
     <button type="submit">Send Message</button>
   </form>
 </div>
+
 <script>
 if (window.innerWidth <= 600) {
   document.getElementById("contact-link").href = "#contact";
 }
-
 
 const mcMsg = document.getElementById("mc-message");
 const mcWc = document.getElementById("mc-wc");
@@ -627,21 +596,19 @@ if (mcMsg) {
   });
 }
 
-// Desktop contact word counter
-const dcMsg = document.getElementById("dc-message");
-const dcWc = document.getElementById("dc-wc");
-if (dcMsg) {
-  dcMsg.addEventListener("input", function() {
+const ctMsg = document.getElementById("ct-message");
+const ctWc = document.getElementById("ct-wc");
+if (ctMsg) {
+  ctMsg.addEventListener("input", function() {
     const words = this.value.trim() === "" ? 0 : this.value.trim().split(/\s+/).length;
     if (words > 232) {
       this.value = this.value.trim().split(/\s+/).slice(0, 232).join(" ");
-      dcWc.textContent = "232 / 232";
+      ctWc.textContent = "232 / 232";
     } else {
-      dcWc.textContent = words + " / 232";
+      ctWc.textContent = words + " / 232";
     }
   });
 }
-
 </script>
 
 
@@ -764,29 +731,51 @@ if (window.innerWidth <= 600) {
   </div>
 </div>
 
+<!-- Contact modal -->
+<div class="modal-overlay" id="modal-contact">
+  <span class="modal-close contact-close-btn" id="contact-close">Close &mdash; Esc</span>
+  <div class="contact-pick">
+    <div class="ct-label">PLX Mastering</div>
+    <div class="ct-location">New York, NY</div>
+    <div class="ct-services">Digital &nbsp;&middot;&nbsp; ATMOS &nbsp;&middot;&nbsp; Lacquer</div>
+    <form class="ct-form" action="https://formspree.io/f/myeepaad" method="POST">
+      <input type="text" name="name" placeholder="Your name" required>
+      <input type="email" name="email" placeholder="you@studio.com" required>
+      <input type="text" name="project" placeholder="Song, EP or album title">
+      <textarea name="message" id="ct-message" placeholder="Tell us about your project"></textarea>
+      <div class="ct-wc" id="ct-wc">0 / 232</div>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</div>
+
 <script>
 (function() {
   if (window.innerWidth <= 600) return;
   const srvLink = document.getElementById('srv-link');
   const prcLink = document.getElementById('prc-link');
+  const contactLink = document.getElementById('contact-link');
   const srvModal = document.getElementById('modal-services');
   const prcModal = document.getElementById('modal-process');
+  const contactModal = document.getElementById('modal-contact');
 
   function open(modal) { modal.classList.add('open'); }
   function close(modal) { modal.classList.remove('open'); }
 
   srvLink.addEventListener('click', function(e) { e.preventDefault(); open(srvModal); });
   prcLink.addEventListener('click', function(e) { e.preventDefault(); open(prcModal); });
+  contactLink.addEventListener('click', function(e) { e.preventDefault(); open(contactModal); });
 
   document.getElementById('srv-close').addEventListener('click', function() { close(srvModal); });
   document.getElementById('prc-close').addEventListener('click', function() { close(prcModal); });
+  document.getElementById('contact-close').addEventListener('click', function() { close(contactModal); });
 
-  [srvModal, prcModal].forEach(function(m) {
+  [srvModal, prcModal, contactModal].forEach(function(m) {
     m.addEventListener('click', function(e) { if (e.target === m) close(m); });
   });
 
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') { close(srvModal); close(prcModal); }
+    if (e.key === 'Escape') { close(srvModal); close(prcModal); close(contactModal); }
   });
 })();
 </script>
